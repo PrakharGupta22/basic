@@ -1,29 +1,55 @@
+import { HttpClient } from '@angular/common/http';
+import { identifierModuleUrl } from '@angular/compiler';
 import { Injectable } from '@angular/core';
+
+import { Observable } from 'rxjs';
 import { Category } from '../model/category';
 import { Product } from '../model/product';
 
 @Injectable()
 export class ProductService {
-  category: Category = new Category('101', 'golf');
-  products: Product[] = [];
-  generateId(): number {
-    return this.products.length + 1;
+  baseUrl = 'http://localhost:4848/products';
+
+  constructor(private http: HttpClient) {}
+
+  addProduct(product: Product): Observable<Product> {
+    const url = this.baseUrl + '/add';
+    let requestData = {
+      productName: product.productName,
+      price: product.price,
+      color: product.color,
+      dimension: product.dimension,
+      specification: product.specification,
+      manufacturer: product.manufacturer,
+      quantity: product.quantity,
+      catId: product.catId,
+    };
+    let observable: Observable<Product> = this.http.post<Product>(
+      url,
+      requestData
+    );
+    return observable;
   }
-  addProduct(product: Product): Product {
-    let id = this.generateId();
-    product.productId = id;
-    this.products.push(product);
-    return product;
+
+  fetchProducts(): Observable<Product[]> {
+    const url = this.baseUrl + '/viewall';
+    let observable: Observable<Product[]> = this.http.get<Product[]>(url);
+    return observable;
   }
-  fetchProducts(): Product[] {
-    return this.products;
+
+  fetchProductById(id: number): Observable<Product> {
+    const url = this.baseUrl + '/get/id/' + id;
+    let observable: Observable<Product> = this.http.get<Product>(url);
+    return observable;
   }
-  fetchProductById(id: number): any {
-    for (let product of this.products) {
-      if (product.productId === id) {
-        return product;
-      }
-    }
-    return null;
+
+  fetchProductsByCategory(catId: string): Observable<Product[]> {
+    const url = this.baseUrl + '/viewProductByCategory/' + catId;
+    let observable: Observable<Product[]> = this.http.get<Product[]>(url);
+    return observable;
+  }
+  deleteProductById(productId:number){
+    const url=this.baseUrl + '/remove/'+ productId;
+    return this.http.delete(url);
   }
 }

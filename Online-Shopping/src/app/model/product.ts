@@ -10,6 +10,7 @@ export class Product {
     public specification: String,
     public manufacturer: String,
     public quantity: number,
-    public category: Category
+    public catId: string,
+    public categoryName: string
   ) {}
 }

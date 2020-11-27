@@ -1,10 +1,43 @@
-<h1 class="text-primary">Product List</h1>
-<ul>
-  <li *ngFor="let product of products">
-    {{ product.productId }} {{ product.productName }} {{ product.price }}
-    {{ product.color }} {{ product.dimension }} {{ product.specification }}
-    {{ product.manufacturer }} {{ product.quantity }}
-    {{ product.category.catId }}
-    {{ product.category.categoryName }}
-  </li>
-</ul>
+<h1 class="text-info text-center">Product List</h1>
+<div class="container">
+    <div class="row">
+      <table border="1" class="table table-striped">
+      <tr>
+        <th>Product Id</th>
+        <th>Product Name</th>
+        <th>Price</th>
+        <th>Color</th>
+        <th>Dimension</th>
+        <th>Specification</th>
+        <th>Manufacturer</th>
+        <th>Quantity</th>
+        <th>Category Id</th>
+        <th>Category Name</th>
+        <th> Action</th>
+    </tr>
+    <tr *ngFor="let product of products">
+    <td>{{ product.productId }}</td>
+    <td>{{ product.productName }}</td>
+    <td>{{ product.price }}</td>
+    <td>{{ product.color}}</td>
+    <td>{{ product.dimension }}</td>
+    <td>{{ product.specification }}</td>
+    <td>{{ product.manufacturer }}</td>
+    <td>{{ product.quantity}}</td>
+    <td>{{ product.catId}}</td>
+    <td>{{ product.categoryName}} </td>
+
+    
+    <td>
+                
+                    
+      <button (click)="removeProduct(product.productId)" class="btn btn-danger">DELETE</button>
+      <button routerLink="updateProduct/{{product.productId}}" class="btn btn-primary">UPDATE</button>
+  </td>
+  
+</tr>
+</table>
+
+</div>
+
+</div>

@@ -1,0 +1,28 @@
+<h1 class="text-center text-primary">Add Category</h1>
+<div class="container jumbotron">
+  <form #myform="ngForm" (ngSubmit)="myform.valid && addCategory(myform)">
+    <div class="form-group">
+      <label for="categoryName">Category Name</label>
+      <input
+        id="categoryName"
+        ngModel
+        name="categoryName"
+        #categoryName="ngModel"
+        required
+        minlength="3"
+        class="form-control"
+      />
+      <div
+        class="text-danger"
+        *ngIf="categoryName.errors != null && categoryName.errors.required"
+      >
+        Category Name can not be empty
+      </div>
+      <button type="submit" class="btn btn-primary">Add Category</button>
+    </div>
+  </form>
+</div>
+<div *ngIf="category">
+  <h3>Category Added</h3>
+  {{ category.catId }}{{ category.categoryName }}
+</div>

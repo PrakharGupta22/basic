@@ -173,24 +173,22 @@
     <hr />
 
     <div class="form-group">
-      <label for="category">Category</label>
+      <label for="catId">Category Id</label>
       <input
         class="form-control"
-        id="category"
-        name="category"
+        id="catId"
+        name="catId"
         ngModel
-        #category="ngModel"
+        #catId="ngModel"
         required
       />
       <div
-        *ngIf="category.errors != null && category.errors.required"
+        *ngIf="catId.errors != null && catId.errors.required"
         class="text-danger"
       >
-        Category can not be empty
+        Category Id can not be empty
       </div>
     </div>
-    <hr />
-
     <button type="submit" class="btn btn-primary">Add Product</button>
   </form>
 </div>
@@ -198,5 +196,6 @@
 <div *ngIf="product !== undefined">
   {{ product.productName }} {{ product.price }} {{ product.color }}
   {{ product.dimension }} {{ product.manufacturer }}
-  {{ product.specification }} {{ product.quantity }} {{ product.category }}
+  {{ product.specification }} {{ product.quantity }} {{ product.catId
+  }}{{ product.categoryName }}
 </div>

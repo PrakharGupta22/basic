@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 import { Product } from '../model/product';
+import { CategoryService } from '../services/categoryservice';
 import { ProductService } from '../services/productservice';
 
 @Component({
@@ -21,9 +23,17 @@ export class AddProductComponent {
       data.specification,
       data.manufacturer,
       data.quantity,
-      data.category
+      data.catId,
+      ''
     );
-    this.productService.addProduct(this.product);
+
+    let observable: Observable<Product> = this.productService.addProduct(
+      this.product
+    );
+    observable.subscribe(
+      (product: Product) => (this.product = product),
+      (err) => console.log('error is' + err.message)
+    );
     myform.reset();
   }
 }

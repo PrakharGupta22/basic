@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { Product } from '../model/product';
 import { ProductService } from '../services/productservice';
 @Component({
   selector: 'app-product-details',
@@ -13,7 +15,12 @@ export class ProductDetailsComponent {
   fetchProduct(myform: any) {
     let data = myform.value;
     let id: number = data.productId;
-
-    this.product = this.productService.fetchProductById(id);
+    let observable: Observable<Product> = this.productService.fetchProductById(
+      id
+    );
+    observable.subscribe(
+      (product: Product) => (this.product = product),
+      (err) => console.log('error is' + err.message)
+    );
   }
 }
