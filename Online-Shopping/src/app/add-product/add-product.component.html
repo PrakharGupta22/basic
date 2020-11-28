@@ -1,4 +1,4 @@
-<h1 class="text-center text-primary">Add Product</h1>
+<h1 class="text-center text-info">Add Product</h1>
 <div class="container jumbotron">
   <form #myform="ngForm" (ngSubmit)="myform.valid && addProduct(myform)">
     <div class="form-group">
@@ -7,23 +7,27 @@
         id="productName"
         ngModel
         name="productName"
-        #productname="ngModel"
+        #productName="ngModel"
         required
         minlength="3"
         class="form-control"
       />
       <div
-        class="text-danger"
-        *ngIf="productname.errors != null && productname.errors.required"
+        *ngIf="
+          productName.invalid && (productName.dirty || productName.touched)
+        "
+        class="alert alert-danger"
       >
-        Product Name can not be empty
-      </div>
+        <div *ngIf="productName.errors != null && productName.errors.required">
+          Product Name can not be empty
+        </div>
 
-      <div
-        *ngIf="productname.errors != null && productname.errors.minlength"
-        class="text-warning"
-      >
-        Please enter atleast 3 characters
+        <div
+          *ngIf="productName.errors != null && productName.errors.minlength"
+          class="text-warning"
+        >
+          Please enter atleast 3 characters
+        </div>
       </div>
     </div>
     <hr />
@@ -40,53 +44,44 @@
         required
       />
       <div
-        *ngIf="price.errors != null && price.errors.required"
-        class="text-danger"
+        *ngIf="price.invalid && (price.dirty || price.touched)"
+        class="alert alert-danger"
       >
-        price is required
+        <div *ngIf="price.errors != null && price.errors.required">
+          price is required
+        </div>
       </div>
     </div>
 
     <hr />
-
-    <div class="form-check-inline">
-      <label class="form-check-label text-dark" for="black">Black</label>
-      <input
-        class="form-check-input"
-        type="radio"
-        name="color"
-        id="black"
-        ngModel
-        #color="ngModel"
-        value="black"
-      />
-      <label class="form-check-label text-white" for="white">White</label>
-      <input
-        class="form-check-input"
-        type="radio"
-        id="white"
+    <div class="form-group">
+      <label for="color">Color</label>
+      <select
+        class="form-control"
+        id="color"
         name="color"
         ngModel
         #color="ngModel"
-        value="White"
-      />
-      <label class="form-check-label text-primary" for="blue">Blue</label>
-      <input
-        class="form-check-input"
-        type="radio"
-        name="color"
-        id="blue"
-        ngModel
-        #color="ngModel"
-        value="Blue"
-      />
-      <div
-        class="text-danger"
-        *ngIf="color.errors != null && color.errors.required"
+        required
+        class="form-control"
       >
-        Select One
+        <option>--Select--</option>
+        <option>Black</option>
+        <option>Whitek</option>
+        <option>Blue</option>
+        <option>Green</option>
+        <option>Red</option>
+      </select>
+      <div
+        *ngIf="color.invalid && (color.dirty || color.touched)"
+        class="alert alert-danger"
+      >
+        <div *ngIf="color.errors != null && color.errors.required">
+          Pick a Color
+        </div>
       </div>
     </div>
+
     <hr />
 
     <div class="form-group">
@@ -100,10 +95,12 @@
         class="form-control"
       />
       <div
-        class="text-danger"
-        *ngIf="dimension.errors != null && dimension.errors.required"
+        *ngIf="dimension.invalid && (dimension.dirty || dimension.touched)"
+        class="alert alert-danger"
       >
-        Specify Dimensions
+        <div *ngIf="dimension.errors != null && dimension.errors.required">
+          Specify Dimensions
+        </div>
       </div>
     </div>
     <hr />
@@ -118,10 +115,17 @@
         class="form-control"
       />
       <div
-        class="text-danger"
-        *ngIf="specification.errors != null && specification.errors.required"
+        *ngIf="
+          specification.invalid &&
+          (specification.dirty || specification.touched)
+        "
+        class="alert alert-danger"
       >
-        Specification can not be empty
+        <div
+          *ngIf="specification.errors != null && specification.errors.required"
+        >
+          Specification can not be empty
+        </div>
       </div>
     </div>
     <hr />
@@ -144,10 +148,16 @@
         <option>Puma</option>
       </select>
       <div
-        class="text-danger"
-        *ngIf="manufacturer.errors != null && manufacturer.errors.required"
+        *ngIf="
+          manufacturer.invalid && (manufacturer.dirty || manufacturer.touched)
+        "
+        class="alert alert-danger"
       >
-        Select a Manufacturer
+        <div
+          *ngIf="manufacturer.errors != null && manufacturer.errors.required"
+        >
+          Select a Manufacturer
+        </div>
       </div>
     </div>
     <hr />
@@ -164,10 +174,12 @@
         required
       />
       <div
-        *ngIf="quantity.errors != null && quantity.errors.required"
-        class="text-danger"
+        *ngIf="quantity.invalid && (quantity.dirty || quantity.touched)"
+        class="alert alert-danger"
       >
-        Quantity can not be empty
+        <div *ngIf="quantity.errors != null && quantity.errors.required">
+          Quantity can not be empty
+        </div>
       </div>
     </div>
     <hr />
@@ -183,19 +195,20 @@
         required
       />
       <div
-        *ngIf="catId.errors != null && catId.errors.required"
-        class="text-danger"
+        *ngIf="catId.invalid && (catId.dirty || catId.touched)"
+        class="alert alert-danger"
       >
-        Category Id can not be empty
+        <div *ngIf="catId.errors != null && catId.errors.required">
+          Category Id can not be empty
+        </div>
       </div>
     </div>
     <button type="submit" class="btn btn-primary">Add Product</button>
   </form>
 </div>
-<h3>Details Submitted</h3>
+
 <div *ngIf="product !== undefined">
-  {{ product.productName }} {{ product.price }} {{ product.color }}
-  {{ product.dimension }} {{ product.manufacturer }}
-  {{ product.specification }} {{ product.quantity }} {{ product.catId
-  }}{{ product.categoryName }}
+  <div class="alert alert-success text-center" role="alert">
+    Product Added Sucessfully
+  </div>
 </div>
